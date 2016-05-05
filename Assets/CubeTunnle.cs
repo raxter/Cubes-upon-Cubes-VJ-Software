@@ -20,6 +20,24 @@ public class CubeTunnle : MonoBehaviour
         }
     }
 
+    public void SetColour(ColorScheme c1, ColorScheme c2, float lerpAmount, float f, float randomShift, float twistAdjust, float offsetAdjust)
+    {
+        float twist = Mathf.Lerp(c1.twist, c2.twist, lerpAmount) + twistAdjust;
+        float randomness = Mathf.Lerp(c1.randomness, c2.randomness, lerpAmount);
+        float offset = Mathf.Lerp(c1.offset, c2.offset, lerpAmount) + offsetAdjust;
+
+        randomShift *= randomness;
+
+        float totalTwist = 0;
+        //Debug.Log("Setting Colour");
+        foreach (var mr in cubes)
+        {
+            float t = ((Random.Range(totalTwist + f - randomShift, totalTwist + f + randomShift) + 1) + 100 + offset) % 1;
+            mr.material.SetColor("_Color", Color.Lerp(c1.gradient.Evaluate(t), c2.gradient.Evaluate(t), lerpAmount));
+            totalTwist += twist;
+        }
+    }
+
     public void SetColour(Gradient gradient, float f, float randomShift)
     {
         Debug.Log("Setting Colour");
@@ -30,11 +48,12 @@ public class CubeTunnle : MonoBehaviour
         }
     }
 
-    
+
 
     // Use this for initialization
     void Start()
     {
+        cubes.Sort((a, b) => a.transform.position.z.CompareTo(b.transform.position.z));
         foreach (var mr in cubes)
         {
             rotationAngles[mr] = Random.onUnitSphere;
