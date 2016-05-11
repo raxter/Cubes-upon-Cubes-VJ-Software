@@ -9,7 +9,12 @@ public class CubeTunnle : MonoBehaviour
 
     public float randomRotationSpeed = 0;
 
+    public float flashChance = 0.2f;
+
     Dictionary<MeshRenderer, Vector3> rotationAngles = new Dictionary<MeshRenderer, Vector3>();
+
+
+    float [] scale;
 
     [ContextMenu("Randomize Rotations")]
     void RandomizeRotations()
@@ -30,10 +35,12 @@ public class CubeTunnle : MonoBehaviour
 
         float totalTwist = 0;
         //Debug.Log("Setting Colour");
-        foreach (var mr in cubes)
+        for (int i = 0; i < cubes.Count; i++)
         {
+            var mr = cubes[i];
             float t = ((Random.Range(totalTwist + f - randomShift, totalTwist + f + randomShift) + 1) + 100 + offset) % 1;
-            mr.material.SetColor("_Color", Color.Lerp(c1.gradient.Evaluate(t), c2.gradient.Evaluate(t), lerpAmount));
+            Color c = Color.Lerp(c1.gradient.Evaluate(t), c2.gradient.Evaluate(t), lerpAmount);
+            mr.material.SetColor("_Color", Color.Lerp(c, Color.white, scale[i]));
             totalTwist += twist;
         }
     }
@@ -41,18 +48,28 @@ public class CubeTunnle : MonoBehaviour
     public void SetColour(Gradient gradient, float f, float randomShift)
     {
         Debug.Log("Setting Colour");
-        foreach (var mr in cubes)
+        for (int i = 0; i < cubes.Count; i++)
         {
+            var mr = cubes[i];
             float t = (Random.Range(f - randomShift, f + randomShift) + 1) % 1;
-            mr.material.SetColor("_Color", gradient.Evaluate(t));
+            Color c = gradient.Evaluate(t);
+            mr.material.SetColor("_Color", Color.Lerp(c, Color.white, scale[i]));
         }
     }
 
-
+    void Awake()
+    {
+        scale = new float[cubes.Count];
+        for (int i = 0; i < cubes.Count; i++)
+        {
+            scale[i] = 1;
+        }
+    }
 
     // Use this for initialization
     void Start()
     {
+
         cubes.Sort((a, b) => a.transform.position.z.CompareTo(b.transform.position.z));
         foreach (var mr in cubes)
         {
@@ -81,6 +98,16 @@ public class CubeTunnle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < cubes.Count; i++)
+        {
+            if (BeatFinder.beatHitThisFrame && Random.value < flashChance)
+                scale[i] = 1f;
+
+            //cubes[i].transform.localScale = Vector3.one * scale[i];
+
+            scale[i] = Mathf.Lerp(scale[i], 0, 3 * Time.deltaTime);
+        }
+
         foreach (var mr in cubes)
         {
             mr.transform.Rotate(rotationAngles[mr], randomRotationSpeed * Time.deltaTime, Space.Self);

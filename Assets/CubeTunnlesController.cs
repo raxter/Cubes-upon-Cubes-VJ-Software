@@ -18,6 +18,9 @@ public class CubeTunnlesController : MonoBehaviour {
     float twistAdjust = 0;
     float offsetAdjust = 0;
 
+    [Range(0,1)]
+    public float flashChance = 0.2f;
+
     // Use this for initialization
     void Start ()
     {
@@ -26,7 +29,8 @@ public class CubeTunnlesController : MonoBehaviour {
 
     void UpdateColours()
     {
-        Random.seed = 0;
+        Random.State oldState = Random.state;
+        Random.InitState(0);
         float diff = 1f / tunnles.Count;
         for (int i = 0; i < tunnles.Count; i++)
         {
@@ -34,6 +38,7 @@ public class CubeTunnlesController : MonoBehaviour {
             tunnles[i].SetColour(oldColourScheme, colourScheme, lerpAmount, f, diff, twistAdjust, offsetAdjust);
             //tunnles[i].SetColour(colourScheme.gradient, f, diff);
         }
+        Random.state = oldState;
     }
 
     bool lerping = false;
@@ -80,6 +85,11 @@ public class CubeTunnlesController : MonoBehaviour {
 
         twistAdjust = ((twistAdjust + 0.5f) % 1f) - 0.5f;
         offsetAdjust = ((offsetAdjust + 0.5f) % 1f) - 0.5f;
+
+        for (int i = 0; i < tunnles.Count; i++)
+        {
+            tunnles[i].flashChance = flashChance;
+        }
 
         if (updateEveryFrame)
             UpdateColours();
