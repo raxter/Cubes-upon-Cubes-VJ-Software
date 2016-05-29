@@ -40,8 +40,13 @@ public class CubeTunnlesController : MonoBehaviour {
 
     void UpdateColours()
     {
+#if UNITY_5_2
+		Random.seed = 0;
+
+#elif UNITY_5_4_OR_NEWER
         Random.State oldState = Random.state;
         Random.InitState(0);
+#endif
         float diff = 1f / tunnles.Count;
         for (int i = 0; i < tunnles.Count; i++)
         {
@@ -49,7 +54,12 @@ public class CubeTunnlesController : MonoBehaviour {
             tunnles[i].SetColour(oldColourScheme, colourScheme, lerpAmount, f, diff, twistAdjust, offsetAdjust);
             //tunnles[i].SetColour(colourScheme.gradient, f, diff);
         }
-        Random.state = oldState;
+		
+#if UNITY_5_2
+		Random.seed = Mathf.RoundToInt(Time.time*1000);
+#elif UNITY_5_4_OR_NEWER
+		Random.state = oldState;
+#endif
     }
 
     bool lerping = false;

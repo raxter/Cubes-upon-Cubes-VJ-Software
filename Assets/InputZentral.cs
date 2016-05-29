@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
 using XboxCtrlrInput;		// Be sure to include this if you want an object to have Xbox input
+
+#if UNITY_5_4_OR_NEWER
+using UnityEngine.SceneManagement;
+#endif
 
 public class InputZentral : MonoBehaviour 
 {
@@ -14,8 +17,12 @@ public class InputZentral : MonoBehaviour
 	void Update()
 	{
 
-		if (Input.GetKeyDown (KeyCode.P)) {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+#if UNITY_5_2
+			Application.LoadLevel(0);
+#elif UNITY_5_4_OR_NEWER
 			SceneManager.LoadScene (0);
+#endif
 		}
 		
 		if (Input.GetKeyDown(KeyCode.Alpha1)) SetColor(0);
