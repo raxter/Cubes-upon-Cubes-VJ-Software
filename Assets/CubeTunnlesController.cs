@@ -12,19 +12,30 @@ public class CubeTunnlesController : MonoBehaviour {
     public bool updateEveryFrame = true;
     public float transisionTime = 4;
 
+	public bool pulseRather = false;
+
     float lerpAmount = 1;
 
+	public float twistAdd = 0;
+	public float offsetAdd = 0;
+	public float flashChanceAdd = 0;
 
     float twistAdjust = 0;
     float offsetAdjust = 0;
 
     [Range(0,1)]
-    public float flashChance = 0.2f;
+    float flashChanceBase = 0.4f;
+
+	float FlashChance { get { return flashChanceBase + flashChanceAdd; } }
 
     // Use this for initialization
     void Start ()
     {
         Update();
+
+		for (int i = 0; i < tunnles.Count; i++) {
+			tunnles [i].ID = i;
+		}
     }
 
     void UpdateColours()
@@ -44,6 +55,8 @@ public class CubeTunnlesController : MonoBehaviour {
     bool lerping = false;
 	void Update ()
     {
+		CubeTunnle.PulseRather = pulseRather;
+
         if (oldColourScheme == null)
             oldColourScheme = colourScheme;
 
@@ -72,6 +85,10 @@ public class CubeTunnlesController : MonoBehaviour {
 
         float twistSpeed = Mathf.Lerp(oldColourScheme.twistPerSecond, colourScheme.twistPerSecond, 1/*lerpAmount*/);
         float offsetSpeed = Mathf.Lerp(oldColourScheme.offsetPerSecond, colourScheme.offsetPerSecond, 1/*lerpAmount*/);
+		CubeTunnle.FlashColor = Color.Lerp (oldColourScheme.flashColor, colourScheme.flashColor, lerpAmount);
+
+		twistSpeed += twistAdd;
+		offsetSpeed += offsetAdd;
 
         if (twistSpeed == 0)
             twistAdjust = Mathf.MoveTowards(twistAdjust, 0, Time.deltaTime / transisionTime);
@@ -88,7 +105,7 @@ public class CubeTunnlesController : MonoBehaviour {
 
         for (int i = 0; i < tunnles.Count; i++)
         {
-            tunnles[i].flashChance = flashChance;
+			tunnles[i].flashChance = FlashChance;
         }
 
         if (updateEveryFrame)

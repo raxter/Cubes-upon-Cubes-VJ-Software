@@ -15,4 +15,6 @@ public class ColorScheme : MonoBehaviour
     public float offset = 0f;
     public float offsetPerSecond = 0f;
     public float randomness = 1f;
+
+	public Color flashColor = Color.white;
 }

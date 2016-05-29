@@ -10,7 +10,7 @@ public class SphereGrid : MonoBehaviour
     public int height = 10;
 
     public float spacing = 1;
-
+	#if UNITY_EDITOR
     [ContextMenu("Update Grid")]
     void UpdateGrid()
     {
@@ -60,7 +60,7 @@ public class SphereGrid : MonoBehaviour
             }
         }
     }
-
+	#endif
     void Update()
     {
 
