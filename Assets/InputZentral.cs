@@ -14,7 +14,7 @@ public class InputZentral : MonoBehaviour
 	void Update()
 	{
 
-		if (Input.GetKeyDown (KeyCode.P)) {
+		if (Input.GetKeyDown (KeyCode.Escape)) {
 			SceneManager.LoadScene (0);
 		}
 		
@@ -30,14 +30,85 @@ public class InputZentral : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha0)) SetColor(9);
 		if (Input.GetKeyDown(KeyCode.Minus)) SetColor(10);
 
+		// Left Bumper/Trigger
+
 		bbc.ScreenShakeAmount = XCI.GetAxis (XboxAxis.LeftTrigger)*3;
+		if (XCI.GetButtonDown(XboxButton.LeftBumper) || Input.GetKeyDown(KeyCode.O))
+		{
+			bbc.SnapToStraight = !bbc.SnapToStraight;
+		}
 
+		// Right Bumper/Trigger
+		CubeTunnle.RandomRotationSpeedMultiplier = 1f - XCI.GetAxis(XboxAxis.RightTrigger);
+		if (XCI.GetButtonDown(XboxButton.RightBumper))
+		{
+			bbc.InvertColours = !bbc.InvertColours;
+		}
+
+		// Left Stick
 		bbc.ForwardSpeed += XCI.GetAxis (XboxAxis.LeftStickY)*Time.deltaTime*15;
+		bbc.DigitalGlitchAmount += XCI.GetAxis (XboxAxis.LeftStickX) * Time.deltaTime * 1f;
+		if (XCI.GetButtonDown (XboxButton.LeftStick)) 
+		{
+			bbc.MotionBlur = !bbc.MotionBlur;
+		}
 
+		// Right Stick
 		bbc.Size += XCI.GetAxis (XboxAxis.RightStickY) * Time.deltaTime * 0.33f;
 		bbc.Size = Mathf.Clamp01 (bbc.Size);
 		bbc.Fidelity += XCI.GetAxis (XboxAxis.RightStickX) * Time.deltaTime * 0.33f;
 		bbc.Fidelity = Mathf.Clamp01 (bbc.Fidelity);
+		if(XCI.GetButtonDown(XboxButton.RightStick))
+		{
+			bbc.ScaleFlashesAmount = bbc.ScaleFlashesAmount == 0 ? 1 : 0;
+		}
+
+
+		// DPAD
+		if (XCI.GetButtonDown (XboxButton.DPadLeft)) 
+		{
+			bbc.AnalogGlitchVertJump = bbc.AnalogGlitchVertJump == 0 ? 1 : 0;
+		}
+		if (XCI.GetButtonDown (XboxButton.DPadDown)) 
+		{
+			bbc.AnalogGlitchAmount = bbc.AnalogGlitchAmount == 0 ? 1 : 0;
+		}
+		if (XCI.GetButtonDown (XboxButton.DPadRight)) 
+		{
+			bbc.AnalogGlitchColor = bbc.AnalogGlitchColor == 0 ? 1 : 0;
+		}
+		if (XCI.GetButtonDown (XboxButton.DPadUp))
+		{
+			bbc.AnalogGlitchVertJump = 0;
+			bbc.AnalogGlitchAmount   = 0;
+			bbc.AnalogGlitchColor    = 0;
+		}
+
+		// Action Buttons
+
+		// NOTEL: The "A" and "B" button are in the Beat Finder class!!
+		if(XCI.GetButtonDown(XboxButton.Y))
+		{
+			bbc.CameraPerspectiveToggle = !bbc.CameraPerspectiveToggle;
+		}
+
+		if (XCI.GetButtonDown (XboxButton.X)) 
+		{
+			bbc.OceanToggle = !bbc.OceanToggle;
+
+		}
+
+		// Start/Select
+		if (XCI.GetButtonDown (XboxButton.Start))
+		{
+			bbc.OrthCameraZoomToggle = !bbc.OrthCameraZoomToggle;
+		}
+		if (XCI.GetButtonDown (XboxButton.Back))
+		{
+			bbc.Edges = !bbc.Edges;
+		}
+
+		// Keyboard
 
 		if (Input.GetKey (KeyCode.T)) 
 		{
@@ -60,6 +131,9 @@ public class InputZentral : MonoBehaviour
 		if (Input.GetKey (KeyCode.E)) 
 			tunnleControl.flashChanceAdd += Time.deltaTime * 0.33f;
 
+		if (Input.GetKey (KeyCode.Tab)) 
+			tunnleControl.flashChanceAdd = -tunnleControl.FlashChanceBase + 0.05f;
+
 		if (Input.GetKey (KeyCode.A))
 			tunnleControl.offsetAdd -= Time.deltaTime * 0.33f;
 		if (Input.GetKey (KeyCode.S))
@@ -75,49 +149,11 @@ public class InputZentral : MonoBehaviour
 			tunnleControl.twistAdd += Time.deltaTime * 0.33f;
 
 
-		CubeTunnle.RandomRotationSpeedMultiplier = 1f - XCI.GetAxis(XboxAxis.RightTrigger);
 
-		if (XCI.GetButtonDown(XboxButton.LeftBumper) || Input.GetKeyDown(KeyCode.O))
-		{
-			bbc.SnapToStraight = !bbc.SnapToStraight;
-		}
-		if (XCI.GetButtonDown(XboxButton.RightBumper))
-		{
-			bbc.ScaleFlashesAmount = bbc.ScaleFlashesAmount == 0 ? 1 : 0;
-		}
 
-		if(XCI.GetButtonDown(XboxButton.RightStick))
-		{
-			bbc.Edges = !bbc.Edges;
-		}
-		if(XCI.GetButtonDown(XboxButton.B))
-		{
-			bbc.CameraPerspectiveToggle = !bbc.CameraPerspectiveToggle;
-		}
 
-		if (XCI.GetButtonDown (XboxButton.X)) 
-		{
-			bbc.InvertColours = !bbc.InvertColours;
-		}
-		if (XCI.GetButtonDown (XboxButton.LeftStick)) 
-		{
-			bbc.MotionBlur = !bbc.MotionBlur;
-		}
 
-		bbc.DigitalGlitchAmount += XCI.GetAxis (XboxAxis.LeftStickX) * Time.deltaTime * 1f;
 
-		if (XCI.GetButtonDown (XboxButton.DPadLeft)) 
-		{
-			bbc.AnalogGlitchVertJump = bbc.AnalogGlitchVertJump == 0 ? 1 : 0;
-		}
-		if (XCI.GetButtonDown (XboxButton.DPadDown)) 
-		{
-			bbc.AnalogGlitchAmount = bbc.AnalogGlitchAmount == 0 ? 1 : 0;
-		}
-		if (XCI.GetButtonDown (XboxButton.DPadRight)) 
-		{
-			bbc.AnalogGlitchColor = bbc.AnalogGlitchColor == 0 ? 1 : 0;
-		}
 	}
 
 	void SetColor(int i )

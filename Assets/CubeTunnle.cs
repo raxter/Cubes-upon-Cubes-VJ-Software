@@ -202,13 +202,13 @@ public class CubeTunnle : MonoBehaviour
 			float globalZ = mr.transform.position.z;
 
 			float spreadFactor = 0.001f;// 0.002f;
-			mr.transform.position = Vector3.Lerp (mr.transform.position, new Vector3 ((ID-6)*(1-gridLerp) * (1+(Mathf.Pow(globalZ, 2)*spreadFactor)*(1-GridLayoutLerpAmount)),-1.5f*(1-gridLerp)+ Mathf.Pow(globalZ, 2) * 0.005f*(1-GridLayoutLerpAmount), gridLerp*2+globalZ/2), oceanLerp);
+			mr.transform.position = Vector3.Lerp (mr.transform.position, new Vector3 ((ID-6)*(1-gridLerp) * (1+(Mathf.Pow(globalZ, 2)*spreadFactor)*(1-GridLayoutLerpAmount)),-1.5f*(1-gridLerp)+ Mathf.Pow(globalZ, 2) * 0.006f*(1-GridLayoutLerpAmount), gridLerp*2+globalZ/2), oceanLerp);
         }
 
 		float oldStrightenAmount = straightenAmount;
 		float targetStraightenAmount = StraightenCubes ? 1 : 0;
 		float dampenFactor = straightenAmount < targetStraightenAmount ? 3 : 10;
-		straightenAmount = Mathf.Lerp(straightenAmount, targetStraightenAmount, Time.deltaTime * dampenFactor);
+		straightenAmount = Mathf.Lerp(straightenAmount, targetStraightenAmount, Time.deltaTime * dampenFactor*RandomRotationSpeedMultiplier);
 
 		if (straightenAmount < 0.1f)
 			straightenAmount = 0;

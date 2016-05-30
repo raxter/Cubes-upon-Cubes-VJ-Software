@@ -108,7 +108,7 @@ public class BeatFinder : MonoBehaviour
 	//--------------------------------------------------------------
 	void Update() {
 
-		if (Input.GetKeyDown (KeyCode.Return)) {
+		if (Input.GetKeyDown (KeyCode.Return)|| XboxCtrlrInput.XCI.GetButtonDown(XboxCtrlrInput.XboxButton.B)) {
 			beatStartTimeOffsetHack = 0;
 			startFresh ();
 		}
