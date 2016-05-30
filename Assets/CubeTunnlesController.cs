@@ -20,13 +20,15 @@ public class CubeTunnlesController : MonoBehaviour {
 	public float offsetAdd = 0;
 	public float flashChanceAdd = 0;
 
+
     float twistAdjust = 0;
     float offsetAdjust = 0;
 
     [Range(0,1)]
-    float flashChanceBase = 0.4f;
+    public float flashChanceBase = 0.4f;
 
 	float FlashChance { get { return flashChanceBase + flashChanceAdd; } }
+	public float FlashChanceBase { get { return flashChanceBase; } }
 
     // Use this for initialization
     void Start ()
