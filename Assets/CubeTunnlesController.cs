@@ -42,6 +42,7 @@ public class CubeTunnlesController : MonoBehaviour {
 
     void UpdateColours()
     {
+		MaterialController.SetGradient (oldColourScheme.gradient, colourScheme.gradient, lerpAmount);
         Random.State oldState = Random.state;
         Random.InitState(0);
         float diff = 1f / tunnles.Count;

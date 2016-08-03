@@ -1,13 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/InputZentral.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/XboxCtrlrInputExample/MovePlayer.cs">
     <Files>
-      <File FileName="Assets/InputZentral.cs" Line="103" Column="38" />
-      <File FileName="Assets/CubeTunnle.cs" Line="1" Column="1" />
-      <File FileName="Assets/CubeTunnlesController.cs" Line="1" Column="7" />
-      <File FileName="Assets/BigBadController.cs" Line="47" Column="25" />
-      <File FileName="Assets/BeatFinder.cs" Line="111" Column="103" />
-      <File FileName="Assets/SphereGrid.cs" Line="1" Column="1" />
+      <File FileName="Assets/MaterialController.cs" Line="40" Column="49" />
+      <File FileName="Assets/CubeTunnlesController.cs" Line="52" Column="27" />
+      <File FileName="Assets/CubeTunnle.cs" Line="246" Column="51" />
+      <File FileName="Assets/XboxCtrlrInputExample/MovePlayer.cs" Line="245" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
