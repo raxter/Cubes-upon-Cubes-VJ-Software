@@ -164,7 +164,7 @@ public class CubeTunnle : MonoBehaviour
         {
             float f = timeElapsed / time;
 			mr.rotationAngle = Vector3.Lerp(oldRandom, newRandom, f);
-            timeElapsed += Time.deltaTime;
+            timeElapsed += Time.deltaTime * RandomRotationSpeedMultiplier;
             yield return null;
         }
         mr.rotationAngle = newRandom;
@@ -248,12 +248,11 @@ public class CubeTunnle : MonoBehaviour
 		float oldStrightenAmount = straightenAmount;
 		float targetStraightenAmount = StraightenCubes ? 1 : 0;
 		float dampenFactor = straightenAmount < targetStraightenAmount ? 3 : 10;
-		straightenAmount = Mathf.Lerp(straightenAmount, targetStraightenAmount, Time.deltaTime * dampenFactor*RandomRotationSpeedMultiplier);
+		straightenAmount = Mathf.Lerp(straightenAmount, targetStraightenAmount, Time.deltaTime * dampenFactor * RandomRotationSpeedMultiplier);
+        if (ID == 0)
+            Debug.Log(straightenAmount+ "\t" + targetStraightenAmount + "\t" + Time.deltaTime +"\t"+ dampenFactor + "\t" + RandomRotationSpeedMultiplier);
 
-		if (straightenAmount < 0.1f)
-			straightenAmount = 0;
-		
-		if (straightenAmount == 0 && oldStrightenAmount != straightenAmount) 
+        if (straightenAmount == 0 && oldStrightenAmount != straightenAmount) 
 		{
 			StopAllCoroutines ();
 			//Debug.LogError ("Straightening");
@@ -264,13 +263,14 @@ public class CubeTunnle : MonoBehaviour
 			}
 		}
 		float rotSpeed = randomRotationSpeed * RandomRotationSpeedMultiplier;
-
+        if (ID == 0)
+            Debug.Log(straightenAmount);
 		for (int i = 0; i < cubesInfo.Count; i++)
 		{
 			var ci = cubesInfo [i];
 			//var ciMod = cubesInfo [i%1];
-			ci.mr.transform.localRotation = Quaternion.Slerp (ci.mr.transform.localRotation, Quaternion.identity, straightenAmount);
-			ci.mr.transform.rotation = Quaternion.Slerp (ci.mr.transform.rotation, Quaternion.Euler ((ci.flipOrtho ? -1 : 1)*52, 0,  45), GridLayoutLerpAmount*straightenAmount);
+			ci.mr.transform.localRotation = Quaternion.Slerp (ci.mr.transform.localRotation, Quaternion.identity, straightenAmount * RandomRotationSpeedMultiplier);
+			ci.mr.transform.rotation = Quaternion.Slerp (ci.mr.transform.rotation, Quaternion.Euler ((ci.flipOrtho ? -1 : 1)*52, 0,  45), GridLayoutLerpAmount* straightenAmount * RandomRotationSpeedMultiplier);
 
 			ci.mr.transform.Rotate(ci.rotationAngle, rotSpeed * Time.deltaTime * (1f - straightenAmount), Space.Self);
         }
