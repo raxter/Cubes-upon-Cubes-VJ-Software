@@ -61,7 +61,7 @@ public class InputZentral : MonoBehaviour
 		}
 
 		// Left Stick
-		bbc.ForwardSpeed += XCI.GetAxis (XboxAxis.LeftStickY)*Time.deltaTime*15;
+		bbc.ForwardSpeed += XCI.GetAxis (XboxAxis.LeftStickY)*Time.deltaTime*4;
 		bbc.DigitalGlitchAmount += XCI.GetAxis (XboxAxis.LeftStickX) * Time.deltaTime * 1f;
 		if (XCI.GetButtonDown (XboxButton.LeftStick)) 
 		{
