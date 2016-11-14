@@ -32,22 +32,26 @@ public class CubeTunnle : MonoBehaviour
 		public float startPosition;
 		public float orthStart;
 		public bool flipOrtho;
-		public float scale;
+		public float flashScale;
 		public bool weAreTheFlash;
-	}
+		public float linearScale;
+        public float finalScale;
+    }
 
 	public static bool StraightenCubes; 
 	public static float ScaleFlashesAmount; 
 
-	public static Color FlashColor;
+    public static Color FlashColor;
+    public static float FlashScaleAmount; // vs custom: linear -> 0, flash -> 1
 
-	public static float ForwardOffset = 0;
+    public static float ForwardOffset = 0;
 
 	public static bool PulseRather = false;
 
 	public static float RandomRotationSpeedMultiplier = 1;
+	public static float DefinedRotationSpeedMultiplier = 1;
 
-	float straightenAmount = 1;
+    float straightenAmount = 1;
 
 
 	float maxZPosition = 0;
@@ -75,8 +79,9 @@ public class CubeTunnle : MonoBehaviour
         }
     }
 
-    public void SetColour(ColorScheme c1, ColorScheme c2, float lerpAmount, float f, float randomShift, float twistAdjust, float offsetAdjust)
+    public void SetColour(ColorScheme c1, ColorScheme c2, float f, float randomShift, float twistAdjust, float offsetAdjust)
     {
+        float lerpAmount = CubeTunnlesController.LerpAmount;
         float twist = Mathf.Lerp(c1.twist, c2.twist, lerpAmount) + twistAdjust;
         float randomness = Mathf.Lerp(c1.randomness, c2.randomness, lerpAmount);
         float offset = Mathf.Lerp(c1.offset, c2.offset, lerpAmount) + offsetAdjust;
@@ -91,13 +96,14 @@ public class CubeTunnle : MonoBehaviour
             float t = ((Random.Range(totalTwist + f - randomShift, totalTwist + f + randomShift) + 1) + 100 + offset) % 1;
 			//mr.sharedMaterial = MaterialController.GetColor (t);
 			Color c = Color.Lerp(c1.gradient.Evaluate(t), c2.gradient.Evaluate(t), lerpAmount);
-			mr.material.SetColor("_Color", Color.Lerp(c, FlashColor, cubesInfo[i].scale));
+            
+            mr.material.SetColor("_Color", Color.Lerp(c, FlashColor, cubesInfo[i].finalScale));
             
 			totalTwist += twist;
         }
     }
 
-    public void SetColour(Gradient gradient, float f, float randomShift)
+    /*public void SetColour(Gradient gradient, float f, float randomShift)
     {
         Debug.Log("Setting Colour");
         for (int i = 0; i < cubesInfo.Count; i++)
@@ -107,7 +113,7 @@ public class CubeTunnle : MonoBehaviour
             Color c = gradient.Evaluate(t);
 			mr.material.SetColor("_Color", Color.Lerp(c, FlashColor, cubesInfo[i].scale));
         }
-    }
+    }*/
 
 	public bool interlaceAfter32 = false;
 
@@ -127,7 +133,7 @@ public class CubeTunnle : MonoBehaviour
         for (int i = 0; i < cubes.Count; i++)
 		{
 			cubesInfo.Add (new MeshRendererInfo () {
-				scale = 1,
+				flashScale = 1,
 				weAreTheFlash = false,
 				mr = cubes [i]
 			}
@@ -210,6 +216,7 @@ public class CubeTunnle : MonoBehaviour
 		//	(GridLayoutLerpAmount == 0 || GridLayoutLerpAmount == 1) && 
 		//	(OceanLayoutLerpAmount == 0 || OceanLayoutLerpAmount == 1);
 
+        
 
         for (int i = 0; i < cubesInfo.Count; i++)
         {
@@ -222,20 +229,34 @@ public class CubeTunnle : MonoBehaviour
 				}
 				if (cubesInfo[i].weAreTheFlash) 
 				{
-					cubesInfo[i].scale = Mathf.Lerp (cubesInfo[i].scale, (BeatFinder.sin1 + 1) * 0.5f, 1f);
+					cubesInfo[i].flashScale = Mathf.Lerp (cubesInfo[i].flashScale, (BeatFinder.sin1 + 1) * 0.5f, 1f);
 				}
 			}
 			else
 			{
-				bool flashYes = BeatFinder.beatHitThisFrame && Random.value < flashChance;
-				if (flashYes)
-					cubesInfo[i].scale = Random.Range (0.99f, 1.01f);
+                if (BeatFinder.beatHitThisFrame)
+                {
+                    bool randomChance = Random.value < flashChance;
+
+                    cubesInfo[i].weAreTheFlash = randomChance;
+                    if (randomChance)
+                    {
+                        cubesInfo[i].flashScale = Random.Range(0.99f, 1.01f);
+                    }
+                }
 			}
 
-			cubesInfo[i].mr.transform.localScale = Vector3.one * Mathf.Lerp(1, 1.4f, cubesInfo[i].scale * ScaleFlashesAmount);
+            if (cubesInfo[i].weAreTheFlash)
+                cubesInfo[i].linearScale = CubeTunnlesController.CustomFlashValue;
+            else
+                cubesInfo[i].linearScale = 0;
+
+            cubesInfo[i].finalScale = Mathf.Lerp(cubesInfo[i].linearScale, cubesInfo[i].flashScale, CubeTunnlesController.LinearScaleVsFlashScale);
+
+            cubesInfo[i].mr.transform.localScale = Vector3.one * Mathf.Lerp(1, 1.4f, cubesInfo[i].finalScale* ScaleFlashesAmount);
 
 			//if (!PulseRather) 
-			cubesInfo[i].scale = Mathf.Lerp(cubesInfo[i].scale, 0, 3 * Time.deltaTime);
+			cubesInfo[i].flashScale = Mathf.Lerp(cubesInfo[i].flashScale, 0, 3 * Time.deltaTime);
 
 			UpdatePositionThings (i, cubesInfo [i].mr);
 
@@ -262,7 +283,7 @@ public class CubeTunnle : MonoBehaviour
 				StartCoroutine(ChangeRotationOverRandomTime(ci, false, 5, 15));
 			}
 		}
-		float rotSpeed = randomRotationSpeed * RandomRotationSpeedMultiplier;
+		float rotSpeed = randomRotationSpeed * RandomRotationSpeedMultiplier * DefinedRotationSpeedMultiplier;
         //if (ID == 0)
         //    Debug.Log(straightenAmount);
 		for (int i = 0; i < cubesInfo.Count; i++)

@@ -72,7 +72,9 @@ public class BeatFinder : MonoBehaviour
 	 
 	public float startTime;
 
-	public static float sin1;
+    public static float linear1;
+
+    public static float sin1;
 	public static float sin2;
 	public static float sin4;
 	public static float sin8;
@@ -131,7 +133,12 @@ public class BeatFinder : MonoBehaviour
 			lerpSpeed = 1;
 		}
 
-		sin1	+= (beatSinS(1) - sin1) * lerpSpeed;
+        if (_beatPerc < linear1)
+            linear1 = _beatPerc;
+        else
+            linear1 += (_beatPerc - linear1) * lerpSpeed;
+
+        sin1	+= (beatSinS(1) - sin1) * lerpSpeed;
 		sin2	+= (beatSinS(2) - sin2) * lerpSpeed;
 		sin4	+= (beatSinS(4) - sin4) * lerpSpeed;
 		sin8	+= (beatSinS(8) - sin8) * lerpSpeed;

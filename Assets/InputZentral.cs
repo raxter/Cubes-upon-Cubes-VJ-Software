@@ -17,22 +17,37 @@ public class InputZentral : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			SceneManager.LoadScene (0);
 		}
-		
-		if (Input.GetKeyDown(KeyCode.Alpha1)) SetColor(0);
-		if (Input.GetKeyDown(KeyCode.Alpha2)) SetColor(1);
-		if (Input.GetKeyDown(KeyCode.Alpha3)) SetColor(2);
-		if (Input.GetKeyDown(KeyCode.Alpha4)) SetColor(3);
-		if (Input.GetKeyDown(KeyCode.Alpha5)) SetColor(4);
-		if (Input.GetKeyDown(KeyCode.Alpha6)) SetColor(5);
-		if (Input.GetKeyDown(KeyCode.Alpha7)) SetColor(6);
-		if (Input.GetKeyDown(KeyCode.Alpha8)) SetColor(7);
-		if (Input.GetKeyDown(KeyCode.Alpha9)) SetColor(8);
-		if (Input.GetKeyDown(KeyCode.Alpha0)) SetColor(9);
-		if (Input.GetKeyDown(KeyCode.Minus)) SetColor(10);
 
-		// Left Bumper/Trigger
+        if (Input.GetKey(KeyCode.LeftShift) == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) SetColor(0);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) SetColor(1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) SetColor(2);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) SetColor(3);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) SetColor(4);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) SetColor(5);
+            if (Input.GetKeyDown(KeyCode.Alpha7)) SetColor(6);
+            if (Input.GetKeyDown(KeyCode.Alpha8)) SetColor(7);
+            if (Input.GetKeyDown(KeyCode.Alpha9)) SetColor(8);
+            if (Input.GetKeyDown(KeyCode.Alpha0)) SetColor(9);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) SetColor(10);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) SetColor(11);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) SetColor(12);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) SetColor(13);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) SetColor(14);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) SetColor(15);
+            if (Input.GetKeyDown(KeyCode.Alpha7)) SetColor(16);
+            if (Input.GetKeyDown(KeyCode.Alpha8)) SetColor(17);
+            if (Input.GetKeyDown(KeyCode.Alpha9)) SetColor(18);
+            if (Input.GetKeyDown(KeyCode.Alpha0)) SetColor(19);
+        }
 
-		bbc.ScreenShakeAmount = XCI.GetAxis (XboxAxis.LeftTrigger)*3;
+            // Left Bumper/Trigger
+
+        bbc.ScreenShakeAmount = XCI.GetAxis(XboxAxis.LeftTrigger) * 3;
 		if (XCI.GetButtonDown(XboxButton.LeftBumper) || Input.GetKeyDown(KeyCode.O))
 		{
 			bbc.SnapToStraight = !bbc.SnapToStraight;

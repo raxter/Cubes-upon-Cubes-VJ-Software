@@ -16,5 +16,10 @@ public class ColorScheme : MonoBehaviour
     public float offsetPerSecond = 0f;
     public float randomness = 1f;
 
+    public float cubeRotationSpeed = 1;
+
 	public Color flashColor = Color.white;
+
+    public bool useCustomFlashCurve;
+    public AnimationCurve customFlashCurve;
 }
