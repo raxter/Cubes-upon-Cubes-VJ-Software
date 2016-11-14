@@ -1,13 +1,17 @@
 ﻿<Properties StartupItem="creative-coast-vj-set.CSharp.Plugins.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\BigBadController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ZineShader.shader">
     <Files>
       <File FileName="Assets\MaterialController.cs" Line="1" Column="1" />
       <File FileName="Assets\CubeTunnlesController.cs" Line="1" Column="1" />
       <File FileName="Assets\CubeTunnle.cs" Line="1" Column="1" />
       <File FileName="Assets\XboxCtrlrInputExample\MovePlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\InputZentral.cs" Line="38" Column="21" />
-      <File FileName="Assets\BigBadController.cs" Line="15" Column="18" />
+      <File FileName="Assets\InputZentral.cs" Line="1" Column="1" />
+      <File FileName="Assets\BigBadController.cs" Line="1" Column="1" />
+      <File FileName="Assets\BeatFinder.cs" Line="1" Column="1" />
+      <File FileName="Assets\ScreenShotUtility.cs" Line="1" Column="1" />
+      <File FileName="Assets\ApplyImageEffect.cs" Line="1" Column="1" />
+      <File FileName="Assets\ZineShader.shader" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

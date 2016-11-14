@@ -249,8 +249,8 @@ public class CubeTunnle : MonoBehaviour
 		float targetStraightenAmount = StraightenCubes ? 1 : 0;
 		float dampenFactor = straightenAmount < targetStraightenAmount ? 3 : 10;
 		straightenAmount = Mathf.Lerp(straightenAmount, targetStraightenAmount, Time.deltaTime * dampenFactor * RandomRotationSpeedMultiplier);
-        if (ID == 0)
-            Debug.Log(straightenAmount+ "\t" + targetStraightenAmount + "\t" + Time.deltaTime +"\t"+ dampenFactor + "\t" + RandomRotationSpeedMultiplier);
+        //if (ID == 0)
+        //    Debug.Log(straightenAmount+ "\t" + targetStraightenAmount + "\t" + Time.deltaTime +"\t"+ dampenFactor + "\t" + RandomRotationSpeedMultiplier);
 
         if (straightenAmount == 0 && oldStrightenAmount != straightenAmount) 
 		{
@@ -263,8 +263,8 @@ public class CubeTunnle : MonoBehaviour
 			}
 		}
 		float rotSpeed = randomRotationSpeed * RandomRotationSpeedMultiplier;
-        if (ID == 0)
-            Debug.Log(straightenAmount);
+        //if (ID == 0)
+        //    Debug.Log(straightenAmount);
 		for (int i = 0; i < cubesInfo.Count; i++)
 		{
 			var ci = cubesInfo [i];
