@@ -3,7 +3,7 @@
 # Cubes-upon-Cubes-VJ-Software
 This is the VJ software I'm using at the moment. Constantly updating as I do shows. 
 
-Please use for your general VJ-ing education. I found it was very hard to find VJ software online, so I present this. Flaws and all! I take no responcibility for the shoddy code. 
+Please use for your general VJ-ing education. I found it was very hard to find VJ software online, so I present this. Flaws and all! I take no responsibility for the shoddy code. 
 Whilst I can code at some level of decent standard, this is a VJ hacky jam thing I made and have had no time to refactor. 
 It's my special little untidy monster ****scruffles head**** so you'll have to accept it as that ^ _ ^
 
@@ -31,13 +31,13 @@ The main classes you want to look at are
 
 CubeTunnlesController.cs and CubeTunnle.cs - Most of the movement stuff is here
 
-BigBadController.cs and its controller, InputZentral.cs - Has all the variables that the Cube Tunnle Controller is given (and a whole lot of variables that aren't anymore)
+BigBadController.cs and its controller, InputZentral.cs - Has all the variables that the Cube Tunnel Controller is given (and a whole lot of variables that aren't anymore)
 
 BeatFinder.cs - I adapted this from a tapper file in https://github.com/memo/ofxMSABPMTapper and ported it to Unity... err badly.
 
 ColorScheme.cs - These are used as prefabs to store the colour and lighting info
 
-The branches are usually pretty dead and are offshoots that I don't feel like deleteing. If this is bad practise then... *shrug* guess it's bad then?
+The branches are usually pretty dead and are offshoots that I don't feel like deleting. If this is bad practice then... *shrug* guess it's bad then?
 
 # Licence Stuff
 So basically:
