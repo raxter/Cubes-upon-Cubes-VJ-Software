@@ -1,9 +1,11 @@
+![Logo](http://raxterworks.com/Prototypes/VJ_static_small.png)
+
 # Cubes-upon-Cubes-VJ-Software
 This is the VJ software I'm using at the moment. Constantly updating as I do shows. 
 
 Please use for your general VJ-ing education. I found it was very hard to find VJ software online, so I present this. Flaws and all! I take no responcibility for the shoddy code. 
 Whilst I can code at some level of decent standard, this is a VJ hacky jam thing I made and have had no time to refactor. 
-It's my special little untidy monster *scruffles head* so you'll have to accept it as that ^ _ ^
+It's my special little untidy monster ****scruffles head**** so you'll have to accept it as that ^ _ ^
 
 Also check this out, helped me a lot when I was starting out https://medium.com/@superdajk
 
@@ -21,6 +23,8 @@ or
 Email: richard [dot] jonathan [dot] baxter [at] gmail [dot] com
 
 # Technical Info / Getting started
+If run just as an app, it needs an xbox (or similar) controller to run. I'll list all the controls here someday (but today is not that day). I think all the buttons and sticks do something. Numbers 1-9 on the keyboard change the colours.
+
 Soooo, yeah the code is a mess. Start off in "Render Texture Fun" scene and start looking around from there. 
 
 The main classes you want to look at are 
